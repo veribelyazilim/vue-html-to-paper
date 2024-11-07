@@ -80,14 +80,24 @@
         addStyles(win, styles);
 
         console.info('VeribelPackage');
-        
-        setTimeout(() => {
-          win.document.close();
-          win.focus();
-          win.print();
-          setTimeout(function () {window.close();}, 1);
-          cb();
-        }, 1000);
+        win.document.close();
+
+        // Trigger the print dialog after loading
+        win.onload = () => {
+          setTimeout(() => {
+            win.focus();
+            win.print();
+            console.warn('VeribelPackage print', autoClose);
+            if (autoClose) {
+              setTimeout(function () {
+                win.close();
+                console.warn('VeribelPackage autoClose', autoClose);
+              }, 1);
+            }
+            cb();
+          }, 1000);
+        };
+
           
         return true;
       };
