@@ -51,7 +51,7 @@ const VueHtmlToPaper = {
         if (localOptions.windowTitle) windowTitle = localOptions.windowTitle;
       }
 
- 
+
       specs = !!specs.length ? specs.join(',') : '';
 
       const element = window.document.getElementById(el);

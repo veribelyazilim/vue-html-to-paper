@@ -9,3 +9,11 @@ Vue mixin for paper printing html elements.
 ### [GitBook Documentation](https://mycure.gitbook.io/mycure-oss/v/vue-html-to-paper/)
 
 Made with ❤️ by [Joff Tiquez](https://twitter.com/jrtiquez)
+
+
+
+https://www.npmjs.com/package/vue-html-to-paper
+
+
+https://mycurelabs.github.io/vue-html-to-paper/
+
