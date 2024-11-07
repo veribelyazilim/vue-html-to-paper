@@ -24,16 +24,20 @@ function openWindow (url, name, props) {
   
 const VueHtmlToPaper = {
   install (Vue, options = {}) {
+
     Vue.prototype.$htmlToPaper = (el, localOptions, cb = () => true) => {
       let defaultName = '_blank', 
         defaultSpecs = ['fullscreen=yes','titlebar=yes', 'scrollbars=yes'],
         defaultReplace = true,
-        defaultStyles = [];
+        defaultStyles = [],
+        defaultWindowTitle = window.document.title;
       let {
         name = defaultName,
         specs = defaultSpecs,
         replace = defaultReplace,
         styles = defaultStyles,
+        autoClose = true,
+        windowTitle = defaultWindowTitle,
       } = options;
 
       // If has localOptions
@@ -43,8 +47,11 @@ const VueHtmlToPaper = {
         if (localOptions.specs) specs = localOptions.specs;
         if (localOptions.replace) replace = localOptions.replace;
         if (localOptions.styles) styles = localOptions.styles;
+        if (localOptions.autoClose === false) autoClose = localOptions.autoClose;
+        if (localOptions.windowTitle) windowTitle = localOptions.windowTitle;
       }
 
+ 
       specs = !!specs.length ? specs.join(',') : '';
 
       const element = window.document.getElementById(el);
@@ -69,6 +76,8 @@ const VueHtmlToPaper = {
       `);
 
       addStyles(win, styles);
+
+      console.info('VeribelPackage');
       
       setTimeout(() => {
         win.document.close();
@@ -83,4 +92,4 @@ const VueHtmlToPaper = {
   },
 };
 
-exports.default = VueHtmlToPaper;
+exports["default"] = VueHtmlToPaper;

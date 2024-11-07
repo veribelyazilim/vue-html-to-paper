@@ -2,7 +2,7 @@
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
   (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.VueHtmlToPaper = factory());
-}(this, (function () { 'use strict';
+})(this, (function () { 'use strict';
 
   function addStyles (win, styles) {
     styles.forEach(style => {
@@ -26,16 +26,20 @@
     
   const VueHtmlToPaper = {
     install (Vue, options = {}) {
+
       Vue.prototype.$htmlToPaper = (el, localOptions, cb = () => true) => {
         let defaultName = '_blank', 
           defaultSpecs = ['fullscreen=yes','titlebar=yes', 'scrollbars=yes'],
           defaultReplace = true,
-          defaultStyles = [];
+          defaultStyles = [],
+          defaultWindowTitle = window.document.title;
         let {
           name = defaultName,
           specs = defaultSpecs,
           replace = defaultReplace,
           styles = defaultStyles,
+          autoClose = true,
+          windowTitle = defaultWindowTitle,
         } = options;
 
         // If has localOptions
@@ -45,8 +49,11 @@
           if (localOptions.specs) specs = localOptions.specs;
           if (localOptions.replace) replace = localOptions.replace;
           if (localOptions.styles) styles = localOptions.styles;
+          if (localOptions.autoClose === false) autoClose = localOptions.autoClose;
+          if (localOptions.windowTitle) windowTitle = localOptions.windowTitle;
         }
 
+   
         specs = !!specs.length ? specs.join(',') : '';
 
         const element = window.document.getElementById(el);
@@ -71,6 +78,8 @@
       `);
 
         addStyles(win, styles);
+
+        console.info('VeribelPackage');
         
         setTimeout(() => {
           win.document.close();
@@ -87,4 +96,4 @@
 
   return VueHtmlToPaper;
 
-})));
+}));
